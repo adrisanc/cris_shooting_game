@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction shootAction;
+    public AudioSource shootingAudio;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         shootAction = playerInput.actions["Shoot"];
+        shootingAudio = GetComponent<AudioSource>();
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity, bulletParent);
         BulletController bulletController = bullet.GetComponent<BulletController>();
+            shootingAudio.Play();
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
         {
             bulletController.target = hit.point;
